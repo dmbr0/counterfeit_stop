@@ -1,5 +1,5 @@
 #!/usr/bin/env python
 import strgen 
-
-
-print(strgen.StringGenerator("[\d\w]{7}").render_list(20,unique=True))
+batch_num = input("Please enter a batch ID:")
+serialqty = input("How many serial numbers would you like to create?:")
+print(strgen.StringGenerator("[\d\w]{7}").render_list(serialqty,unique=True))

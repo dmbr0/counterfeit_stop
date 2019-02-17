@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import os
+import glob
 import strgen
 from bip38 import *
 from bitcoin import *
@@ -55,14 +56,5 @@ for serial in serials:
         os.mkdir(batch_num)
     img.save(batch_num+'/'+addr+'.jpg', "JPEG")
     
-
-    print " "
-    print "==============================================================="
-    print " Encrypted paper wallet (image file) created."
-    print " "
-    print 'Bitcoin address:' + addr
-    print 'Encrypted key:' + bip
-    print 'Serial:' + serial
-    print " "
-    print " (To decrypt, run 'python unlock-bip38.py')"
-    print "==============================================================="
+wallets = [Image.open(item) for i in [glob.glob(batch_num+'/*.%s' % ext) for ext in ["jpg","gif","png","tga"]] for item in i]
+wallets[0].save("out.pdf", save_all=True, append_images=wallets[1:])

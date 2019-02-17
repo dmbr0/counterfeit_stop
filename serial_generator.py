@@ -57,4 +57,4 @@ for serial in serials:
     img.save(batch_num+'/'+addr+'.jpg', "JPEG")
     
 wallets = [Image.open(item) for i in [glob.glob(batch_num+'/*.%s' % ext) for ext in ["jpg","gif","png","tga"]] for item in i]
-wallets[0].save("out.pdf", save_all=True, append_images=wallets[1:])
+wallets[0].save(batch_num+"/"+batch_num+".pdf", save_all=True, append_images=wallets[1:])

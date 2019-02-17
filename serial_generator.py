@@ -6,10 +6,11 @@ from qrcode import *
 from PIL import Image
 from PIL import ImageFont
 from PIL import ImageDraw
+from fpdf import FPDF
 
-batch_num = input("Please enter a batch ID:")
+batch_num = raw_input("Please enter a batch ID:")
 serialqty = input("How many products would you like to mark?:")
-
+wallets = []
 serials = strgen.StringGenerator("[\d\w]{7}").render_list(serialqty,unique=True)
 
 for serial in serials:
@@ -49,8 +50,9 @@ for serial in serials:
     draw.text((20, 20), 'SERIAL:  ' + serial, fcolor, font)
     draw.text((20, 70), 'ADDRESS:  ' + addr, fcolor, font)
     draw.text((20, (img_h - 100)), 'BIP38 KEY:  ' + bip, fcolor, font)
-
-    img.save(addr+'.jpg', "JPEG")
+    os.mkdir(batch_num)
+    img.save(batch_num+'/'+addr+'.jpg', "JPEG")
+    
 
     print " "
     print "==============================================================="

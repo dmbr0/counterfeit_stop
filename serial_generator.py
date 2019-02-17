@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+import os
 import strgen
 from bip38 import *
 from bitcoin import *
@@ -50,7 +51,8 @@ for serial in serials:
     draw.text((20, 20), 'SERIAL:  ' + serial, fcolor, font)
     draw.text((20, 70), 'ADDRESS:  ' + addr, fcolor, font)
     draw.text((20, (img_h - 100)), 'BIP38 KEY:  ' + bip, fcolor, font)
-    os.mkdir(batch_num)
+    if not os.path.exists(batch_num): 
+        os.mkdir(batch_num)
     img.save(batch_num+'/'+addr+'.jpg', "JPEG")
     
 

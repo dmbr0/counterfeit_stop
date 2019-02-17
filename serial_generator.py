@@ -57,4 +57,17 @@ for serial in serials:
     img.save(batch_num+'/'+addr+'.jpg', "JPEG")
     
 wallets = [Image.open(item) for i in [glob.glob(batch_num+'/*.%s' % ext) for ext in ["jpg","gif","png","tga"]] for item in i]
-wallets[0].save(batch_num+"/"+batch_num+".pdf", save_all=True, append_images=wallets[1:])
+widths, heights = zip(*(i.size for i in wallets))
+
+total_width = sum(widths)
+max_height = max(heights)
+
+new_im = Image.new('RGB', (total_width, max_height))
+
+x_offset = 0
+for im in wallets:
+  new_im.paste(im, (x_offset,0))
+  x_offset += im.size[0]
+
+new_im.save(batch_num+"/"+batch_num+'.jpg')
+

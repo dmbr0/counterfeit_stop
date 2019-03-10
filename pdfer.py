@@ -4,10 +4,10 @@ from PIL import Image
 import os 
   
 # storing image path 
-img_path = "/Users/christophergliatas/projects/counterfeit_stop/vert_compiled.jpg"
+img_path = "#Path to the vertical.py .jpg file"
   
 # storing pdf path 
-pdf_path = "/Users/christophergliatas/projects/counterfeit_stop/vert_compiled.pdf"
+pdf_path = "#path to where the .pdf will be stored"
   
 # opening image 
 image = Image.open(img_path) 

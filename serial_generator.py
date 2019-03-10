@@ -2,6 +2,7 @@
 import os
 import glob
 import strgen
+import sys
 from bip38 import *
 from bitcoin import *
 from qrcode import *
@@ -9,6 +10,7 @@ from PIL import Image
 from PIL import ImageFont
 from PIL import ImageDraw
 from fpdf import FPDF
+from PIL import Image
 
 batch_num = raw_input("Please enter a batch ID:")
 serialqty = input("How many products would you like to mark?:")
@@ -33,25 +35,25 @@ for serial in serials:
     im = qr.make_image()
     im_w, im_h = im.size
 
+    
     #QR image for key
-    qr2 = QRCode(box_size=4, border=3, error_correction=ERROR_CORRECT_M) 
+    qr2 = QRCode(box_size=1, border=3, error_correction=ERROR_CORRECT_M) 
     qr2.add_data(bip)
     im2 = qr2.make_image()
     im2_w, im2_h = im2.size
 
     #draw QRs
     offs = (img_w - im_w - im2_w) / 4
-    img.paste(im, (offs,(img_h-im_h)/2) )
-    img.paste(im2, (im_w+(3*offs),(img_h-im2_h)/2) )
-
+    img.paste(im2, (im_w+(600),(img_h-im2_h)/8) )    
+    
+    
     #draw labels
     draw = ImageDraw.Draw(img) 
-    font = ImageFont.truetype("/usr/share/fonts/truetype/msttcorefonts/Arial_Bold.ttf",22)
+    font = ImageFont.truetype("/System/Library/Fonts/Helvetica.ttc",12)
     fcolor =  (0,0,0)
-    draw.text((im_w+(3*offs),(img_h-im_h)/3-10), 'BIP38 Key', fcolor, font)
-    draw.text((20, 20), 'SERIAL:  ' + serial, fcolor, font)
-    draw.text((20, 70), 'ADDRESS:  ' + addr, fcolor, font)
-    draw.text((20, (img_h - 100)), 'BIP38 KEY:  ' + bip, fcolor, font)
+    draw.text((15, 17), 'SERIAL:  ' + serial, fcolor, font)
+    draw.text((200, 17), 'BIP38 KEY:  ' + bip, fcolor, font)
+
     if not os.path.exists(batch_num): 
         os.mkdir(batch_num)
     img.save(batch_num+'/'+addr+'.jpg', "JPEG")
